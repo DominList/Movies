@@ -17,7 +17,7 @@ import com.dpl.dominlist.movies.model.Movies
 @Composable
 fun MoviesList(
     movieItems: Movies,
-    onItemClick: (String) -> Unit
+    onItemClick: (Int) -> Unit
 ) {
 
     LazyColumn(
@@ -28,7 +28,7 @@ fun MoviesList(
     ) {
         items(movieItems) { item ->
             Text(
-                text = item.title,
+                text = item.title?:"",
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
