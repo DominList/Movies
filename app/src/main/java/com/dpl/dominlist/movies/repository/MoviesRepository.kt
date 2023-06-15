@@ -1,23 +1,25 @@
 package com.dpl.dominlist.movies.repository
 
 import android.util.Log
+import com.dpl.dominlist.movies.data.DataWrapper
 import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.model.Movies
 import com.dpl.dominlist.movies.network.MoviesApi
 import info.movito.themoviedbapi.model.MovieDb
 import info.movito.themoviedbapi.model.core.MovieResultsPage
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MoviesRepository @Inject constructor(private val api: MoviesApi) {
 
-    suspend fun getAllMovies(coroutineScope: CoroutineScope?): Movies {
-        val resultMovies = Movies()
-        coroutineScope?.launch {
-            val deferredRequest = async(Dispatchers.IO) { api.getAllPages() }
+
+    private val dataWrapper = DataWrapper(Movies())
+    suspend fun getAllMovies(): DataWrapper<Movies> =
+        withContext(Dispatchers.IO) {
+
+            val deferredRequest = async { api.getAllPages() }
             val moviePages = deferredRequest.await()
 
             val deferredExtraction = async(Dispatchers.Default) {
@@ -29,14 +31,16 @@ class MoviesRepository @Inject constructor(private val api: MoviesApi) {
                 } else {
                     Log.e("Movies", "Movie pages are empty!")
                 }
+                extractedMovies.sortBy { it.title }
                 extractedMovies
             }
-            resultMovies.addAll( deferredExtraction.await() )
+            dataWrapper.wrappedData = deferredExtraction.await()
+            dataWrapper
         }
-        return resultMovies
-    }
 
-    private suspend fun extractPage(page: MovieResultsPage): Movies {
+
+
+    private fun extractPage(page: MovieResultsPage): Movies {
         val movies = Movies()
         page.forEach { movieDb: MovieDb? ->
             movieDb?.let {
@@ -47,9 +51,7 @@ class MoviesRepository @Inject constructor(private val api: MoviesApi) {
                     homePage = it.homepage
                 ).apply {
                     movies.add(this)
-                    Log.d("Movie", this.toString())
                 }
-
             }
         }
         return movies
