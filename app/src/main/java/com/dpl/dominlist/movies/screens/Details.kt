@@ -1,34 +1,35 @@
 package com.dpl.dominlist.movies.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.dpl.dominlist.movies.R
-import com.dpl.dominlist.movies.components.MoviesList
-import com.dpl.dominlist.movies.navigation.MovieScreens
+import androidx.navigation.NavHostController
+import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.viewmodel.MoviesHomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoviesHome(
-    navController: NavController,
+fun Details(
+    navController: NavHostController,
+    movieId: String?,
     viewModel: MoviesHomeViewModel = hiltViewModel()
 ) {
-
-    val movieItems = viewModel.movieList.collectAsState().value
+    val movie: MovieItem =
+        viewModel.movieList.collectAsState().value.first { movieItem -> movieItem.id == movieId }
 
     Column(
         modifier = Modifier
@@ -37,20 +38,25 @@ fun MoviesHome(
     ) {
         TopAppBar(
             title = {
-                Text(text = stringResource(id = R.string.title))
+                Text(text = movie.title ?: "")
             },
             actions = {
                 Icon(
-                    imageVector = Icons.Rounded.Notifications, contentDescription = "Rounded icon"
+                    imageVector = Icons.Rounded.Star, contentDescription = "Rounded icon"
                 )
             },
-            colors =  TopAppBarDefaults.centerAlignedTopAppBarColors()
-        )
-        MoviesList(
-            movieItems = movieItems,
-            onItemClick = {
-                navController.navigate(route = MovieScreens.Detail.name+"/$it")
+            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
+            navigationIcon = {
+                IconButton(onClick = {}) {
+                    Icon(Icons.Filled.ArrowBack, "Back Icon",
+                        modifier = Modifier.clickable {
+                            navController.popBackStack()
+                        }
+                    )
+                }
             }
         )
+
+
     }
 }

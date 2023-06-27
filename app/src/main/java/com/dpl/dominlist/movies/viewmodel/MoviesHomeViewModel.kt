@@ -1,32 +1,50 @@
 package com.dpl.dominlist.movies.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dpl.dominlist.movies.data.DataWrapper
-import com.dpl.dominlist.movies.model.Movies
+import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.repository.MoviesRepository
+import com.dpl.dominlist.movies.service.MoviesService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MoviesHomeViewModel @Inject constructor(
-    private val repository: MoviesRepository
+    private val repository: MoviesRepository,
+    private val updateService: MoviesService
 ) : ViewModel() {
 
-    val data: MutableState<DataWrapper<Movies>> = mutableStateOf(
-        DataWrapper(Movies())
-    )
+//    val data: MutableState<DataWrapper<Movies>> = mutableStateOf(
+//        DataWrapper(Movies())
+//    )
+
+
+    private val _moviesList = MutableStateFlow(emptyList<MovieItem>())
+    val movieList = _moviesList.asStateFlow()
+
 
     init {
         getAllMovies()
     }
 
-    private fun getAllMovies() {
+    fun fetchData() {
         viewModelScope.launch {
-            data.value = repository.getAllMovies()
+            updateService.fetchData()
+        }
+    }
+
+    private fun getAllMovies() {
+        Log.d(this.javaClass.simpleName, "getAllMovies()")
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getAllMovies().distinctUntilChanged().collect {
+                _moviesList.value = it
+            }
         }
     }
 }

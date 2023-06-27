@@ -14,14 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dpl.dominlist.movies.model.Movies
+import com.dpl.dominlist.movies.model.MovieItem
 
 @Composable
 fun MoviesList(
-    movieItems: Movies,
-    onItemClick: (Int) -> Unit
+    movieItems: List<MovieItem>,
+    onItemClick: (String) -> Unit
 ) {
-
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()

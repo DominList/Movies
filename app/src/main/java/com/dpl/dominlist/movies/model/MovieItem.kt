@@ -1,9 +1,14 @@
 package com.dpl.dominlist.movies.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "movies_table") // optional name
 data class MovieItem(
-    val id: Int,
-    val title: String?,
-    val posterPath: String?,
-    val homePage: String?,
-    var favourite: Boolean = false
+    @PrimaryKey val id: String,
+    @ColumnInfo val title: String?, // column annotation can contain an optional name for db
+    @ColumnInfo val posterPath: String?,
+    @ColumnInfo val homePage: String?,
+    @ColumnInfo var favourite: Boolean = false
 )

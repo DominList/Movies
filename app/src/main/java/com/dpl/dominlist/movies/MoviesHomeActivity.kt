@@ -3,12 +3,10 @@ package com.dpl.dominlist.movies
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
-import com.dpl.dominlist.movies.screens.MoviesHome
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.dpl.dominlist.movies.navigation.MovieNavigation
 import com.dpl.dominlist.movies.ui.theme.MoviesTheme
+import com.dpl.dominlist.movies.viewmodel.MoviesHomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,15 +14,15 @@ class MoviesHomeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
+            if (savedInstanceState == null) {
+                val viewModel: MoviesHomeViewModel = hiltViewModel()
+                viewModel.fetchData()
+            }
+
             MoviesTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MoviesHome()
-                }
+                MovieNavigation()
             }
         }
     }
