@@ -28,35 +28,45 @@ fun Details(
     movieId: String?,
     viewModel: MoviesHomeViewModel = hiltViewModel()
 ) {
-    val movie: MovieItem =
-        viewModel.movieList.collectAsState().value.first { movieItem -> movieItem.id == movieId }
+    // todo this code is not matching any value at firs load
+    //  which is caused by empty list of movies
+    val movie: MovieItem? =
+        viewModel.movieList.collectAsState().value.firstOrNull { movieItem -> movieItem.id == movieId }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
-        TopAppBar(
-            title = {
-                Text(text = movie.title ?: "")
-            },
-            actions = {
-                Icon(
-                    imageVector = Icons.Rounded.Star, contentDescription = "Rounded icon"
-                )
-            },
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
-            navigationIcon = {
-                IconButton(onClick = {}) {
-                    Icon(Icons.Filled.ArrowBack, "Back Icon",
-                        modifier = Modifier.clickable {
-                            navController.popBackStack()
-                        }
-                    )
-                }
-            }
-        )
-
-
+        DetailsTopBar(movie, navController)
+        Scro
     }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun DetailsTopBar(
+    movie: MovieItem?,
+    navController: NavHostController
+) {
+    TopAppBar(
+        title = {
+            Text(text = movie?.title ?: "")
+        },
+        actions = {
+            Icon(
+                imageVector = Icons.Rounded.Star, contentDescription = "Rounded icon"
+            )
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
+        navigationIcon = {
+            IconButton(onClick = {}) {
+                Icon(Icons.Filled.ArrowBack, "Back Icon",
+                    modifier = Modifier.clickable {
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
+    )
 }

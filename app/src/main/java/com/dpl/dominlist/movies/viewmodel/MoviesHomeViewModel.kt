@@ -1,5 +1,6 @@
 package com.dpl.dominlist.movies.viewmodel
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,15 +27,17 @@ class MoviesHomeViewModel @Inject constructor(
 
 
     private val _moviesList = MutableStateFlow(emptyList<MovieItem>())
-    val movieList = _moviesList.asStateFlow()
+    val movieList get() =_moviesList.asStateFlow()
 
 
     init {
+        Log.d(this.javaClass.simpleName, "init viewModel: getALlMovies()")
         getAllMovies()
     }
 
     fun fetchData() {
         viewModelScope.launch {
+            // todo use sharedPrefs for limiting data fetch with date
             updateService.fetchData()
         }
     }
@@ -44,6 +47,7 @@ class MoviesHomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMovies().distinctUntilChanged().collect {
                 _moviesList.value = it
+                Log.d(this.javaClass.simpleName, "getAllMovies() inside viewModel scope")
             }
         }
     }

@@ -18,6 +18,8 @@ class MoviesHomeActivity : ComponentActivity() {
         setContent {
             if (savedInstanceState == null) {
                 val viewModel: MoviesHomeViewModel = hiltViewModel()
+
+                // todo move to viewModel, launch by comparing dates
                 viewModel.fetchData()
             }
 

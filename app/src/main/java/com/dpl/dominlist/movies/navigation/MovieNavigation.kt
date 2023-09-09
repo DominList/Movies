@@ -2,6 +2,7 @@ package com.dpl.dominlist.movies.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,7 +24,7 @@ fun MovieNavigation() {
         composable(
             route = MovieScreens.Detail.name + "/{movie}",
             arguments = listOf(navArgument(name = "movie") { type = NavType.StringType })
-        ) { backStackEntry ->
+        ) { backStackEntry: NavBackStackEntry ->
             Details(
                 navController = navController,
                 backStackEntry.arguments?.getString("movie")
