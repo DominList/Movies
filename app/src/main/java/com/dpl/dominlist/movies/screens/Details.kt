@@ -2,8 +2,14 @@ package com.dpl.dominlist.movies.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.Star
@@ -16,12 +22,13 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.viewmodel.MoviesHomeViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Details(
     navController: NavHostController,
@@ -39,7 +46,22 @@ fun Details(
             .fillMaxHeight()
     ) {
         DetailsTopBar(movie, navController)
-        Scro
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .verticalScroll(
+                    rememberScrollState()
+                )
+        ) {
+            val paddingValues = PaddingValues(10.dp)
+            Row(modifier = Modifier.padding(paddingValues)) {
+                Text(
+                    fontSize = 14.sp,
+                    text = movie?.description?: "no info")
+            }
+
+        }
     }
 }
 

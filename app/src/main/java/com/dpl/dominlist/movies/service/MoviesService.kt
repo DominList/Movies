@@ -46,6 +46,8 @@ class MoviesService @Inject constructor(
                 MovieItem(
                     id = it.id.toString(),
                     title = it.title,
+                    description = it.overview,
+//                    alternativeTitles = it.alternativeTitles,
                     posterPath = it.posterPath,
                     homePage = it.homepage
                 ).apply {
