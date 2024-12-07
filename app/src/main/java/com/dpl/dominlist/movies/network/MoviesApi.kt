@@ -1,7 +1,7 @@
 package com.dpl.dominlist.movies.network
 
 import android.util.Log
-import com.dpl.dominlist.movies.utlis.Constants.MOVIES_API_KEY
+import com.dpl.dominlist.movies.BuildConfig
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbMovies
 import info.movito.themoviedbapi.model.MovieDb
@@ -15,7 +15,7 @@ class MoviesApi {
 
     fun getAllPages(): List<MovieResultsPage> {
         if (moviesApi == null) {
-            moviesApi = TmdbApi(MOVIES_API_KEY)
+            moviesApi = TmdbApi(BuildConfig.MOVIES_API_KEY)
         }
         val resultList = ArrayList<MovieResultsPage>()
         moviesApi?.movies?.let { moviesDB ->
