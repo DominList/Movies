@@ -23,11 +23,11 @@ fun MovieNavigation() {
 
         composable(
             route = MovieScreens.Detail.name + "/{movie}",
-            arguments = listOf(navArgument(name = "movie") { type = NavType.StringType })
+            arguments = listOf(navArgument(name = "movie") { type = NavType.LongType })
         ) { backStackEntry: NavBackStackEntry ->
             Details(
                 navController = navController,
-                backStackEntry.arguments?.getString("movie")
+                backStackEntry.arguments?.getLong("movie")!!
             )
         }
     }

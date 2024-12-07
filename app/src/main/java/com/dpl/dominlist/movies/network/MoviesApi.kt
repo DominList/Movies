@@ -29,7 +29,6 @@ class MoviesApi {
             }
         }
         return resultList
-
     }
 
 
@@ -40,7 +39,9 @@ class MoviesApi {
             " =================== Loading page = $page  ...  ========================"
         )
         nowPlayingMovies.forEach { movieDb: MovieDb? ->
-            movieDb?.let { Log.d("Movie", it.title) }
+            movieDb?.let {
+//              todo maybe logging??
+            }
         }
         return nowPlayingMovies
     }
