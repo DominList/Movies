@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import info.movito.themoviedbapi.model.AlternativeTitle
+import java.util.Date
 
 @Entity(tableName = "movies_table") // optional name
 data class MovieItem(
@@ -13,5 +14,8 @@ data class MovieItem(
     @ColumnInfo val description: String?,
     @ColumnInfo val posterPath: String?,
     @ColumnInfo val homePage: String?,
+    @ColumnInfo val isAdult: Boolean?,
+    @ColumnInfo val runtime: Date?,
+    @ColumnInfo val images: List<String>?,
     @ColumnInfo var favourite: Boolean = false
 )

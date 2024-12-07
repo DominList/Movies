@@ -29,7 +29,6 @@ class MoviesApi {
             }
         }
         return resultList
-
     }
 
 
@@ -40,7 +39,21 @@ class MoviesApi {
             " =================== Loading page = $page  ...  ========================"
         )
         nowPlayingMovies.forEach { movieDb: MovieDb? ->
-            movieDb?.let { Log.d("Movie", it.title) }
+            movieDb?.let {
+                Log.d("Movie",
+                    "title = ${it.title}\n"
+                        .plus("overview =  ${it.overview} \n")
+                        .plus("posterPath =  ${it.getImages().map {  }} \n")
+                        .plus("posterPath =  ${it.posterPath} \n")
+                        .plus("posterPath =  ${it.posterPath} \n")
+                        .plus("posterPath =  ${it.posterPath} \n")
+                        .plus("posterPath =  ${it.posterPath} \n")
+                        .plus("posterPath =  ${it.posterPath} \n")
+                        .plus("posterPath =  ${it.posterPath} \n")
+                        .plus("posterPath =  ${it.posterPath} \n")
+                        .plus("posterPath =  ${it.posterPath} \n")
+                )
+            }
         }
         return nowPlayingMovies
     }

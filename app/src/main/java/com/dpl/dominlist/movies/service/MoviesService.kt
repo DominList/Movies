@@ -9,6 +9,7 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
+import java.util.Date
 import javax.inject.Inject
 
 class MoviesService @Inject constructor(
@@ -47,9 +48,13 @@ class MoviesService @Inject constructor(
                     id = it.id.toString(),
                     title = it.title,
                     description = it.overview,
-//                    alternativeTitles = it.alternativeTitles,
+//          todo          alternativeTitles = it.alternativeTitles,
                     posterPath = it.posterPath,
-                    homePage = it.homepage
+                    homePage = it.homepage,
+                    isAdult = it.isAdult,
+//                    casts = it.cast,
+                    runtime = Date(it.runtime.toLong()),
+                    images = it.getImages()?.map { artwork -> artwork.filePath }
                 ).apply {
                     movies.add(this)
                 }
