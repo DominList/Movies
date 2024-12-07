@@ -163,20 +163,29 @@ val movieItemsExample = listOf(
         title = "example1",
         description = "That could be a very test description",
         posterPath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
-        homePage = null
+        homePage = null,
+        isAdult = TODO(),
+        runtime = TODO(),
+        favourite = TODO()
     ),
     MovieItem(
         id = "1",
         title = "example2",
         description = "That could be a very test description",
         posterPath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
-        homePage = null
+        homePage = null,
+        isAdult = TODO(),
+        runtime = TODO(),
+        favourite = TODO()
     ),
     MovieItem(
         id = "2",
         title = "example3",
         description = "That could be a very test description",
         posterPath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
-        homePage = null
+        homePage = null,
+        isAdult = TODO(),
+        runtime = TODO(),
+        favourite = TODO()
     )
 )

@@ -15,7 +15,7 @@ data class MovieItem(
     @ColumnInfo val posterPath: String?,
     @ColumnInfo val homePage: String?,
     @ColumnInfo val isAdult: Boolean?,
-    @ColumnInfo val runtime: Date?,
-    @ColumnInfo val images: List<String>?,
+    @ColumnInfo val runtime: String?,
+//    @ColumnInfo val images: List<String>?,
     @ColumnInfo var favourite: Boolean = false
 )

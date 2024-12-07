@@ -53,8 +53,8 @@ class MoviesService @Inject constructor(
                     homePage = it.homepage,
                     isAdult = it.isAdult,
 //                    casts = it.cast,
-                    runtime = Date(it.runtime.toLong()),
-                    images = it.getImages()?.map { artwork -> artwork.filePath }
+                    runtime = "",//Date(it.runtime.toLong()),
+//                    images = it.getImages()?.map { artwork -> artwork.filePath }
                 ).apply {
                     movies.add(this)
                 }
