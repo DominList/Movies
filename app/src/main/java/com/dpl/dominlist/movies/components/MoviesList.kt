@@ -35,7 +35,7 @@ import com.dpl.dominlist.movies.model.MovieItem
 @Preview
 fun MoviesList(
     movieItems: List<MovieItem> = movieItemsExample,
-    onItemClick: (String) -> Unit = {}
+    onItemClick: (Long) -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -63,7 +63,7 @@ fun MoviesList(
 @Composable
 private fun SingleMovieCard(
     item: MovieItem,
-    onItemClick: (String) -> Unit
+    onItemClick: (Long) -> Unit
 ) {
     val imagePath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg"
 
@@ -159,33 +159,33 @@ fun ImageTest() {
 
 val movieItemsExample = listOf(
     MovieItem(
-        id = "0",
+        id = 1,
         title = "example1",
         description = "That could be a very test description",
         posterPath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
-        homePage = null,
-        isAdult = TODO(),
-        runtime = TODO(),
-        favourite = TODO()
+        homePage = null
+//        isAdult = TODO(),
+//        runtime = TODO(),
+//        favourite = TODO()
     ),
     MovieItem(
-        id = "1",
+        id = 1,
         title = "example2",
         description = "That could be a very test description",
         posterPath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
         homePage = null,
-        isAdult = TODO(),
-        runtime = TODO(),
-        favourite = TODO()
+//        isAdult = TODO(),
+//        runtime = TODO(),
+//        favourite = TODO()
     ),
     MovieItem(
-        id = "2",
+        id = 2,
         title = "example3",
         description = "That could be a very test description",
         posterPath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
         homePage = null,
-        isAdult = TODO(),
-        runtime = TODO(),
-        favourite = TODO()
+//        isAdult = TODO(),
+//        runtime = TODO(),
+//        favourite = TODO()
     )
 )

@@ -45,7 +45,7 @@ class MoviesService @Inject constructor(
         page.forEach { movieDb: MovieDb? ->
             movieDb?.let {
                 MovieItem(
-                    id = it.id.toString(),
+                    id = it.id.toLong(),
                     title = it.title,
                     description = it.overview,
 //          todo          alternativeTitles = it.alternativeTitles,

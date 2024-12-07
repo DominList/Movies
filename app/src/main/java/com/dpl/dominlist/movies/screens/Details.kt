@@ -32,7 +32,7 @@ import com.dpl.dominlist.movies.viewmodel.MoviesHomeViewModel
 @Composable
 fun Details(
     navController: NavHostController,
-    movieId: String?,
+    movieId: Long,
     viewModel: MoviesHomeViewModel = hiltViewModel()
 ) {
     // todo this code is not matching any value at firs load

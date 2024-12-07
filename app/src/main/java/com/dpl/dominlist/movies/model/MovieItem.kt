@@ -8,14 +8,14 @@ import java.util.Date
 
 @Entity(tableName = "movies_table") // optional name
 data class MovieItem(
-    @PrimaryKey val id: String,
-    @ColumnInfo val title: String?, // column annotation can contain an optional name for db
+    @PrimaryKey val id: Long,
+    @ColumnInfo val title: String? = null, // column annotation can contain an optional name for db
 //    @ColumnInfo val alternativeTitles: List<AlternativeTitle>?, // todo use type converter
-    @ColumnInfo val description: String?,
-    @ColumnInfo val posterPath: String?,
-    @ColumnInfo val homePage: String?,
-    @ColumnInfo val isAdult: Boolean?,
-    @ColumnInfo val runtime: String?,
+    @ColumnInfo val description: String? = null,
+    @ColumnInfo val posterPath: String? = null,
+    @ColumnInfo val homePage: String? = null,
+    @ColumnInfo val isAdult: Boolean? = null,
+    @ColumnInfo val runtime: String? = null,
 //    @ColumnInfo val images: List<String>?,
     @ColumnInfo var favourite: Boolean = false
 )

@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id("com.google.devtools.ksp")
+    id 'com.google.devtools.ksp'
 
 //    id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
@@ -71,6 +71,7 @@ dependencies {
     // room
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+
     // to use kotlin annotation processing tool (kapt)
     ksp "androidx.room:room-compiler:$room_version"
     implementation("androidx.room:room-ktx:$room_version")

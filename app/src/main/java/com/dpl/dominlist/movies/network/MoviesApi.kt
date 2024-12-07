@@ -40,19 +40,7 @@ class MoviesApi {
         )
         nowPlayingMovies.forEach { movieDb: MovieDb? ->
             movieDb?.let {
-                Log.d("Movie",
-                    "title = ${it.title}\n"
-                        .plus("overview =  ${it.overview} \n")
-                        .plus("posterPath =  ${it.getImages().map {  }} \n")
-                        .plus("posterPath =  ${it.posterPath} \n")
-                        .plus("posterPath =  ${it.posterPath} \n")
-                        .plus("posterPath =  ${it.posterPath} \n")
-                        .plus("posterPath =  ${it.posterPath} \n")
-                        .plus("posterPath =  ${it.posterPath} \n")
-                        .plus("posterPath =  ${it.posterPath} \n")
-                        .plus("posterPath =  ${it.posterPath} \n")
-                        .plus("posterPath =  ${it.posterPath} \n")
-                )
+//              todo maybe logging??
             }
         }
         return nowPlayingMovies

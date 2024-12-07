@@ -4,7 +4,7 @@ buildscript {
 
     ext.nav_version = "2.8.4"
     ext.room_version = "2.6.1"
-    ext.hilt_version = '2.44'
+    ext.hilt_version = '2.51.1'
 
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
@@ -15,21 +15,7 @@ plugins {
     id 'com.android.application' version '8.7.3' apply false
     id 'com.android.library' version '8.7.3' apply false
     id 'org.jetbrains.kotlin.android' version '2.0.20' apply false
-
     id("com.google.devtools.ksp") version "2.0.20-1.0.24" apply false
-
-
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.20" apply false
     // this version matches your Kotlin version
-
-//    id 'libs.plugins.jetbrainsCompose' version '1.4.2' apply false
-//    id 'libs.plugins.compose.compiler' version '1.4.2' apply false
-
-
-//        alias(libs.plugins.jetbrainsCompose) apply false
-//        alias(libs.plugins.compose.compiler) apply false
-
-//    id 'kotlin-kapt' version '1.8.22' apply false
-//    id 'dagger.hilt.android.plugin' version '2.44' apply false
-
 }
