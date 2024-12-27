@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dpl.dominlist.movies.R
-import com.dpl.dominlist.movies.components.ImageTest
 import com.dpl.dominlist.movies.components.MoviesList
 import com.dpl.dominlist.movies.navigation.MovieScreens
 import com.dpl.dominlist.movies.viewmodel.MoviesHomeViewModel

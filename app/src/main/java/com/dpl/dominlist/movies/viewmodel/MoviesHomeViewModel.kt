@@ -21,9 +21,6 @@ class MoviesHomeViewModel @Inject constructor(
     private val updateService: MoviesService
 ) : ViewModel() {
 
-//    val data: MutableState<DataWrapper<Movies>> = mutableStateOf(
-//        DataWrapper(Movies())
-//    )
 
 
     private val _moviesList = MutableStateFlow(emptyList<MovieItem>())

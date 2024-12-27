@@ -4,21 +4,18 @@ import android.util.Log
 import com.dpl.dominlist.movies.BuildConfig
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbMovies
-import info.movito.themoviedbapi.model.MovieDb
 import info.movito.themoviedbapi.model.core.MovieResultsPage
 import javax.inject.Singleton
 
 @Singleton
 class MoviesApi {
 
-    private var moviesApi: TmdbApi? = null
+    private val moviesApi: TmdbApi by lazy { TmdbApi(BuildConfig.MOVIES_API_KEY) }
 
     fun getAllPages(): List<MovieResultsPage> {
-        if (moviesApi == null) {
-            moviesApi = TmdbApi(BuildConfig.MOVIES_API_KEY)
-        }
+
         val resultList = ArrayList<MovieResultsPage>()
-        moviesApi?.movies?.let { moviesDB ->
+        moviesApi.movies?.let { moviesDB ->
             var page = 1
             val totalPagesNumber = loadResultsPerPage(moviesDB, page)?.totalPages ?: 0
             while (page < totalPagesNumber) {
@@ -33,16 +30,9 @@ class MoviesApi {
 
 
     private fun loadResultsPerPage(movies: TmdbMovies, page: Int): MovieResultsPage? {
-        val nowPlayingMovies = movies.getNowPlayingMovies("pl", page, "PL")
-        Log.d(
-            "Movie",
-            " =================== Loading page = $page  ...  ========================"
-        )
-        nowPlayingMovies.forEach { movieDb: MovieDb? ->
-            movieDb?.let {
-//              todo maybe logging??
-            }
-        }
-        return nowPlayingMovies
+        Log.d("Movie","Loading page = $page")
+        return movies.getNowPlayingMovies("pl", page, "PL")
     }
+
+    val configUrl: String by lazy { moviesApi.configuration.secureBaseUrl}
 }

@@ -5,12 +5,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,9 +30,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
 import coil.transform.RoundedCornersTransformation
+import com.dpl.dominlist.movies.R
 import com.dpl.dominlist.movies.model.MovieItem
 
 @Composable
@@ -65,7 +71,6 @@ private fun SingleMovieCard(
     item: MovieItem,
     onItemClick: (Long) -> Unit
 ) {
-    val imagePath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg"
 
     Card(
         modifier = Modifier
@@ -80,20 +85,22 @@ private fun SingleMovieCard(
             Surface(
                 modifier = Modifier
                     .padding(5.dp)
-                    .size(100.dp),
+                    .height(250.dp).aspectRatio(.7F, true),
                 shape = RoundedCornerShape(8.dp),
                 shadowElevation = 5.dp,
             ) {
                 Image(
                     painter = rememberAsyncImagePainter(
-                        ImageRequest.Builder(LocalContext.current).data(data = imagePath) // todo put correct image
+                        ImageRequest.Builder(LocalContext.current).data(data = item.posterPath) // todo put correct image
                             .apply(block = fun ImageRequest.Builder.() {
                                 crossfade(true)
                                 transformations(RoundedCornersTransformation())
                                 scale(Scale.FIT)
+                                error(coil.base.R.drawable.ic_100tb)
                             }).build()
                     ),
-                    contentDescription = "Movie image"
+                    contentDescription = "Movie image",
+                    modifier = Modifier.fillMaxSize()
                 )
             }
 
@@ -109,7 +116,7 @@ private fun SingleMovieCard(
                         .padding(5.dp)
                 )
                 Text(
-                    text = item.posterPath ?: "no image url",
+                    text = item.posterPath!!,
                     fontStyle = FontStyle.Italic,
                     fontSize = 14.sp,
                     modifier = Modifier
@@ -118,8 +125,6 @@ private fun SingleMovieCard(
                         .padding(start = 5.dp)
                 )
             }
-
-
 
 
         }
@@ -131,7 +136,8 @@ private fun SingleMovieCard(
 @Composable
 fun ImageTest() {
 
-    val imagePath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg"
+    val imagePath =
+        "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg"
 
     Row {
 
@@ -144,9 +150,10 @@ fun ImageTest() {
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current).data(data = imagePath)
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(data = imagePath)
                         .apply(block = fun ImageRequest.Builder.() {
-                            crossfade(false)
+                            crossfade(true)
                             transformations(RoundedCornersTransformation())
                             scale(Scale.FIT)
                         }).build()
