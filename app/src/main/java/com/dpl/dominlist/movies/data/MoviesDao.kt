@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.dpl.dominlist.movies.model.MovieItem
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +21,7 @@ interface MoviesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movieItem: MovieItem)
 
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(movies: List<MovieItem>)
 
