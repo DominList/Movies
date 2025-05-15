@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MoviesDao {
 
-    @Query("SELECT * from movies_table")
+    @Query("SELECT * from movies_table order by title asc")
     fun getMovies(): Flow<List<MovieItem>>
 
     @Query("SELECT * from movies_table where id =:id")
