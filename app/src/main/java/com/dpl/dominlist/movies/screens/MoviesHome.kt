@@ -12,6 +12,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,7 +51,7 @@ fun MoviesHome(
         )
         // test
         MoviesList(
-            movieItems = movieItems,
+            movieItems = remember { movieItems },
             onItemClick = {
                 navController.navigate(route = MovieScreens.Detail.name+"/$it")
             }

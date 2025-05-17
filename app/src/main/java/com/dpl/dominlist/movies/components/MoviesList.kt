@@ -1,15 +1,18 @@
 package com.dpl.dominlist.movies.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -47,18 +50,9 @@ fun MoviesList(
             .padding(2.dp)
     ) {
         items(movieItems.value) { item ->
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-            )
+            Spacer(modifier = Modifier.fillMaxWidth().height(3.dp))
             SingleMovieCard(item, onItemClick)
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-            )
-
+            Spacer(modifier = Modifier.fillMaxWidth().height(3.dp))
         }
     }
 }
@@ -68,7 +62,6 @@ private fun SingleMovieCard(
     item: MovieItem,
     onItemClick: (Long) -> Unit
 ) {
-    val imagePath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg"
 
     Card(
         modifier = Modifier
@@ -79,21 +72,23 @@ private fun SingleMovieCard(
             },
     ) {
         Row {
-
             Surface(
                 modifier = Modifier
-                    .padding(5.dp)
-                    .size(100.dp),
+                    .padding(10.dp)
+                    .fillMaxWidth(.4f)
+                    .aspectRatio(.75f),
                 shape = RoundedCornerShape(8.dp),
                 shadowElevation = 5.dp,
             ) {
+                Log.d("TAG", "SingleMovieCard: ${item.posterPath}")
+                val url = "https://image.tmdb.org/t/p/w500${item.posterPath}" // fixme prepare link somewhere else
                 Image(
                     painter = rememberAsyncImagePainter(
-                        ImageRequest.Builder(LocalContext.current).data(data = imagePath) // todo put correct image
+                        ImageRequest.Builder(LocalContext.current).data(data = url)
                             .apply(block = fun ImageRequest.Builder.() {
                                 crossfade(true)
                                 transformations(RoundedCornersTransformation())
-                                scale(Scale.FIT)
+                                scale(Scale.FILL)
                             }).build()
                     ),
                     contentDescription = "Movie image"
@@ -121,12 +116,7 @@ private fun SingleMovieCard(
                         .padding(start = 5.dp)
                 )
             }
-
-
-
-
         }
-
     }
 }
 
@@ -151,7 +141,7 @@ fun ImageTest() {
                         .apply(block = fun ImageRequest.Builder.() {
                             crossfade(false)
                             transformations(RoundedCornersTransformation())
-                            scale(Scale.FIT)
+                            scale(Scale.FILL)
                         }).build()
                 ),
                 contentDescription = "Movie image"
