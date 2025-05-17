@@ -5,44 +5,33 @@ import com.dpl.dominlist.movies.BuildConfig
 import com.dpl.dominlist.movies.utlis.getTAG
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbMovies
-import info.movito.themoviedbapi.model.MovieDb
 import info.movito.themoviedbapi.model.core.MovieResultsPage
 import javax.inject.Singleton
 
 @Singleton
 class MoviesApi {
 
-    private var moviesApi: TmdbApi? = null
+    // not injectable!!!
+    private val tmDbApi by lazy { TmdbApi(BuildConfig.MOVIES_API_KEY) }
 
     fun getAllPages(): List<MovieResultsPage> {
-        if (moviesApi == null) {
-            moviesApi = TmdbApi(BuildConfig.MOVIES_API_KEY)
-        }
         val resultList = ArrayList<MovieResultsPage>()
-        moviesApi?.movies?.let { moviesDB ->
+        tmDbApi.movies?.let { moviesDB ->
             var page = 1
-            val totalPagesNumber = loadResultsPerPage(moviesDB, page)?.totalPages ?: 0
-            while (page < totalPagesNumber) {
-                page++
-                loadResultsPerPage(moviesDB, page)?.let {
+            var totalPagesNumber = 0
+            do {
+                getPLMoviesPage(moviesDB, page)?.let {
+                    it.page
+                    totalPagesNumber = it.totalPages
                     resultList.add(it)
-                }
-            }
+                    it.forEach { Log.d(getTAG(), "title: ${it.title}") }
+                    Log.i(getTAG(), "getPLMoviesPage: page=$page of $totalPagesNumber added!")
+                } ?: Log.e(getTAG(), "getPLMoviesPage: page=$page of $totalPagesNumber is null")
+                page++
+            } while (page <= totalPagesNumber)
         }
         return resultList
     }
 
-
-    private fun loadResultsPerPage(movies: TmdbMovies, page: Int): MovieResultsPage? {
-        val nowPlayingMovies = movies.getNowPlayingMovies("pl", page, "PL")
-        Log.d(
-            "Movie",
-            " =================== Loading page = $page  ...  ========================"
-        )
-        nowPlayingMovies.forEach { movieDb: MovieDb? ->
-            movieDb?.let {
-        Log.d(getTAG(), "title: ${it.title}")            }
-        }
-        return nowPlayingMovies
-    }
+    fun getPLMoviesPage(movies : TmdbMovies, page: Int?): MovieResultsPage?  = movies.getNowPlayingMovies("pl", page, "PL")
 }

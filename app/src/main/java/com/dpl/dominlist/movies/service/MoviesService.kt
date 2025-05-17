@@ -9,6 +9,7 @@ import com.dpl.dominlist.movies.utlis.getTAG
 import info.movito.themoviedbapi.model.MovieDb
 import info.movito.themoviedbapi.model.core.MovieResultsPage
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -20,18 +21,16 @@ class MoviesService @Inject constructor(
 
     suspend fun fetchData() =
         withContext(Dispatchers.IO) {
-            val deferredRequest = async { api.getAllPages() }
-            val moviePages = deferredRequest.await()
-            async(Dispatchers.Default) {
-                moviePages.flatMap { page -> extractPage(page) }
-            }.await().let { movies ->
-                Log.d(getTAG(), "movies update: ${movies.size}")
-                moviesDao.insertAll(movies)
-            }
+            api.getAllPages()
+                .flatMap { page -> extractPage(page) }
+                .let { movies ->
+                    Log.d(getTAG(), "movies update: ${movies.size}")
+                    moviesDao.insertAll(movies)
+                }
         }
 
 
     private fun extractPage(page: MovieResultsPage): List<MovieItem> =
-        page.map { movieDb: MovieDb -> map(movieDb) }.toList()
+        page.mapNotNull { movieDb: MovieDb -> map(movieDb) }.toList()
 
 }
