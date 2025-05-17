@@ -18,6 +18,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
@@ -34,7 +37,7 @@ import com.dpl.dominlist.movies.model.MovieItem
 @Composable
 @Preview
 fun MoviesList(
-    movieItems: List<MovieItem> = movieItemsExample,
+    movieItems: State<List<MovieItem>> = remember { mutableStateOf(movieItemsExample) },
     onItemClick: (Long) -> Unit = {}
 ) {
     LazyColumn(
@@ -43,7 +46,7 @@ fun MoviesList(
             .fillMaxHeight()
             .padding(2.dp)
     ) {
-        items(movieItems) { item ->
+        items(movieItems.value) { item ->
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,6 +159,7 @@ fun ImageTest() {
         }
     }
 }
+
 
 val movieItemsExample = listOf(
     MovieItem(

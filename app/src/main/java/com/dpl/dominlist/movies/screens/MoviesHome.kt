@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -18,6 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.dpl.dominlist.movies.R
 import com.dpl.dominlist.movies.components.MoviesList
+import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.navigation.MovieScreens
 import com.dpl.dominlist.movies.viewmodel.MoviesHomeViewModel
 
@@ -28,7 +30,7 @@ fun MoviesHome(
     viewModel: MoviesHomeViewModel = hiltViewModel()
 ) {
 
-    val movieItems = viewModel.movieList.collectAsStateWithLifecycle().value
+    val movieItems : State<List<MovieItem>> = viewModel.movieList.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier

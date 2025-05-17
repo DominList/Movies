@@ -16,7 +16,9 @@ import com.dpl.dominlist.movies.screens.MoviesHome
 @Composable
 fun MovieNavigation() {
     val navController = rememberNavController()
+
     NavHost(navController = navController, startDestination = MovieScreens.Movies.name) {
+
         composable(route = MovieScreens.Movies.name) {
             MoviesHome(navController = navController)
         }

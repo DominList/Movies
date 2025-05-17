@@ -1,9 +1,11 @@
 package com.dpl.dominlist.movies.service
 
+import android.util.Log
 import com.dpl.dominlist.movies.data.MoviesDao
 import com.dpl.dominlist.movies.model.Mapper.map
 import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.network.MoviesApi
+import com.dpl.dominlist.movies.utlis.getTAG
 import info.movito.themoviedbapi.model.MovieDb
 import info.movito.themoviedbapi.model.core.MovieResultsPage
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +25,7 @@ class MoviesService @Inject constructor(
             async(Dispatchers.Default) {
                 moviePages.flatMap { page -> extractPage(page) }
             }.await().let { movies ->
+                Log.d(getTAG(), "movies update: ${movies.size}")
                 moviesDao.insertAll(movies)
             }
         }

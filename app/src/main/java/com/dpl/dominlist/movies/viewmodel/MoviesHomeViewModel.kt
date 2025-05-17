@@ -1,12 +1,12 @@
 package com.dpl.dominlist.movies.viewmodel
 
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.repository.MoviesRepository
 import com.dpl.dominlist.movies.service.MoviesService
+import com.dpl.dominlist.movies.utlis.getTAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,11 +19,8 @@ import javax.inject.Inject
 class MoviesHomeViewModel @Inject constructor(
     private val repository: MoviesRepository,
     private val updateService: MoviesService
-) : ViewModel() {
 
-//    val data: MutableState<DataWrapper<Movies>> = mutableStateOf(
-//        DataWrapper(Movies())
-//    )
+) : ViewModel() {
 
 
     private val _moviesList = MutableStateFlow(emptyList<MovieItem>())
@@ -33,6 +30,8 @@ class MoviesHomeViewModel @Inject constructor(
     init {
         Log.d(this.javaClass.simpleName, "init viewModel: getALlMovies()")
         getAllMovies()
+        // fixme use sharedPrefs for limiting data fetch with date
+        fetchData()
     }
 
     fun fetchData() {
@@ -43,12 +42,13 @@ class MoviesHomeViewModel @Inject constructor(
     }
 
     private fun getAllMovies() {
-        Log.d(this.javaClass.simpleName, "getAllMovies()")
+        Log.d(getTAG(), "getAllMovies()")
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMovies().distinctUntilChanged().collect {
                 _moviesList.value = it
-                Log.d(this.javaClass.simpleName, "getAllMovies() inside viewModel scope")
+                for (item in it) Log.d(this@MoviesHomeViewModel.getTAG(), item.toString())
             }
         }
     }
+
 }

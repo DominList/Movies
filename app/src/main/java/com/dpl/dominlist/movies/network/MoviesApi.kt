@@ -2,6 +2,7 @@ package com.dpl.dominlist.movies.network
 
 import android.util.Log
 import com.dpl.dominlist.movies.BuildConfig
+import com.dpl.dominlist.movies.utlis.getTAG
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbMovies
 import info.movito.themoviedbapi.model.MovieDb
@@ -40,8 +41,7 @@ class MoviesApi {
         )
         nowPlayingMovies.forEach { movieDb: MovieDb? ->
             movieDb?.let {
-//              todo maybe logging??
-            }
+        Log.d(getTAG(), "title: ${it.title}")            }
         }
         return nowPlayingMovies
     }
