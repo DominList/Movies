@@ -16,8 +16,7 @@ class PreferencesService @Inject constructor(applicationContext: Context) {
         Log.d(getTAG(), "PreferencesService: init.")
     }
 
-    fun shouldUpdateDB() =
-        getNowToMillis() - getLastDbUpdateTime() > UPDATE_INTERVAL
+    fun shouldUpdateDB() = getNowToMillis() - getLastDbUpdateTime() > UPDATE_INTERVAL
 
 
     fun markDbUpdated() = setUpdateTime(getNowToMillis())
@@ -41,4 +40,4 @@ class PreferencesService @Inject constructor(applicationContext: Context) {
 }
 
 // should be move to time util
-internal fun getNowToMillis() = Calendar.getInstance().timeInMillis
+private fun getNowToMillis() = Calendar.getInstance().timeInMillis

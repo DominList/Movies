@@ -15,19 +15,20 @@ object Mapper {
         }
     }
 
-
-
     private fun mapInternal(movieDto: MovieDb): MovieItem = MovieItem(
         id = movieDto.id.toLong(),
         title = movieDto.title,
         description = movieDto.overview,
-//          todo          alternativeTitles = it.alternativeTitles,
         posterPath = movieDto.posterPath,
         homePage = movieDto.homepage,
         isAdult = movieDto.isAdult,
-//                    casts = it.cast,
-        runtime = "",//Date(it.runtime.toLong()),
-//                    images = it.getImages()?.map { artwork -> artwork.filePath }
+        runtime = movieDto.runtime,
+        originalTitle = movieDto.originalTitle,
+        backdropPath = movieDto.backdropPath,
+        voteAverage = movieDto.voteAverage,
+        voteCount = movieDto.voteCount,
+        releaseDate = movieDto.releaseDate,
+        popularity = movieDto.popularity,
     ).apply {
         Log.d(getTAG(), "map: id=$id of $title")
     }

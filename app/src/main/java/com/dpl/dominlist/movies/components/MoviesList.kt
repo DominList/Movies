@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -36,6 +35,7 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.transform.RoundedCornersTransformation
 import com.dpl.dominlist.movies.model.MovieItem
+import com.dpl.dominlist.movies.utlis.getMediumPictureUrl
 
 @Composable
 @Preview
@@ -81,7 +81,8 @@ private fun SingleMovieCard(
                 shadowElevation = 5.dp,
             ) {
                 Log.d("TAG", "SingleMovieCard: ${item.posterPath}")
-                val url = "https://image.tmdb.org/t/p/w500${item.posterPath}" // fixme prepare link somewhere else
+                val url: String? = getMediumPictureUrl(item.posterPath) ?: getMediumPictureUrl(item.backdropPath)
+
                 Image(
                     painter = rememberAsyncImagePainter(
                         ImageRequest.Builder(LocalContext.current).data(data = url)
@@ -157,29 +158,17 @@ val movieItemsExample = listOf(
         title = "example1",
         description = "That could be a very test description",
         posterPath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
-        homePage = null
-//        isAdult = TODO(),
-//        runtime = TODO(),
-//        favourite = TODO()
     ),
     MovieItem(
         id = 1,
         title = "example2",
         description = "That could be a very test description",
         posterPath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
-        homePage = null,
-//        isAdult = TODO(),
-//        runtime = TODO(),
-//        favourite = TODO()
     ),
     MovieItem(
         id = 2,
         title = "example3",
         description = "That could be a very test description",
         posterPath = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzM2MDk3MTcyMV5BMl5BanBnXkFtZTcwNjg0MTUzNA@@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
-        homePage = null,
-//        isAdult = TODO(),
-//        runtime = TODO(),
-//        favourite = TODO()
     )
 )
