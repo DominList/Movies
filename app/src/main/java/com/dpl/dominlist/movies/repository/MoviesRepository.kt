@@ -13,7 +13,7 @@ class MoviesRepository @Inject constructor(private val moviesDao: MoviesDao) {
 
     suspend fun updateMovie(movieItem: MovieItem) = moviesDao.update(movieItem)
 
-    suspend fun addAllMovies(movies: List<MovieItem>) = moviesDao.insertAll(movies)
+    suspend fun addOrUpdateMovies(movies: List<MovieItem>) : List<Long> = moviesDao.insertAll(movies)
 
     fun getAllMovies() = moviesDao.getMovies().flowOn(Dispatchers.IO).conflate()
 }

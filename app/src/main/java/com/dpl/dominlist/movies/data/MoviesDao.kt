@@ -23,7 +23,7 @@ interface MoviesDao {
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(movies: List<MovieItem>)
+    suspend fun insertAll(movies: List<MovieItem>) : List<Long>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(movieItem: MovieItem)
