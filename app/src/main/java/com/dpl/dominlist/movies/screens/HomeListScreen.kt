@@ -26,7 +26,7 @@ import com.dpl.dominlist.movies.viewmodel.MoviesHomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoviesHome(
+fun HomeListScreen(
     navController: NavController,
     viewModel: MoviesHomeViewModel = hiltViewModel()
 ) {

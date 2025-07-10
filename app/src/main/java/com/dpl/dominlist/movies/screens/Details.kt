@@ -22,23 +22,40 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.dpl.dominlist.movies.components.movieItemsExample
 import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.viewmodel.MoviesHomeViewModel
 
 @Composable
-fun Details(
-    navController: NavHostController,
-    movieId: Long,
+fun ShowDetailsScreen(
+    navController: NavHostController? = null,
+    movieId: Long? = null,
     viewModel: MoviesHomeViewModel = hiltViewModel()
 ) {
-    // todo this code is not matching any value at firs load
-    //  which is caused by empty list of movies
-    val movie: MovieItem? =
-        viewModel.movieList.collectAsState().value.firstOrNull { movieItem -> movieItem.id == movieId }
+    val movie = viewModel.movieList.collectAsState().value
+        .firstOrNull { movieItem -> movieItem.id == movieId }
+
+    Details(navController = navController, movie = movie)
+}
+
+
+@Preview
+@Composable
+private fun ShowDetailsPreview() {
+    Details(movie = movieItemsExample.first())
+}
+
+@Composable
+private fun Details(
+    navController: NavHostController? = null,
+    movie: MovieItem?= null,
+) {
 
     Column(
         modifier = Modifier
@@ -46,30 +63,16 @@ fun Details(
             .fillMaxHeight()
     ) {
         DetailsTopBar(movie, navController)
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .verticalScroll(
-                    rememberScrollState()
-                )
-        ) {
-            val paddingValues = PaddingValues(10.dp)
-            Row(modifier = Modifier.padding(paddingValues)) {
-                Text(
-                    fontSize = 14.sp,
-                    text = movie?.description?: "no info")
-            }
-
-        }
+        DetailsContent(movie)
     }
 }
+
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun DetailsTopBar(
     movie: MovieItem?,
-    navController: NavHostController
+    navController: NavHostController?
 ) {
     TopAppBar(
         title = {
@@ -83,12 +86,35 @@ private fun DetailsTopBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
         navigationIcon = {
             IconButton(onClick = {}) {
-                Icon(Icons.Filled.ArrowBack, "Back Icon",
+                Icon(
+                    Icons.Filled.ArrowBack, "Back Icon",
                     modifier = Modifier.clickable {
-                        navController.popBackStack()
+                        navController?.popBackStack()
                     }
                 )
             }
         }
     )
+}
+
+@Composable
+fun DetailsContent(movie: MovieItem?) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .verticalScroll(
+                rememberScrollState()
+            )
+    ) {
+        val paddingValues = PaddingValues(10.dp)
+        Row(modifier = Modifier.padding(paddingValues)) {
+            Text(
+                lineHeight = 1.8.em,
+                fontSize = 28.sp,
+                text = movie?.description ?: "no info"
+            )
+        }
+
+    }
 }

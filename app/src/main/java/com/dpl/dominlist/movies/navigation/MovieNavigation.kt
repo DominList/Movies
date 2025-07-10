@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.dpl.dominlist.movies.screens.Details
-import com.dpl.dominlist.movies.screens.MoviesHome
+import com.dpl.dominlist.movies.screens.HomeListScreen
+import com.dpl.dominlist.movies.screens.ShowDetailsScreen
 
 
 @Preview
@@ -20,14 +20,14 @@ fun MovieNavigation() {
     NavHost(navController = navController, startDestination = MovieScreens.Movies.name) {
 
         composable(route = MovieScreens.Movies.name) {
-            MoviesHome(navController = navController)
+            HomeListScreen(navController = navController)
         }
 
         composable(
             route = MovieScreens.Detail.name + "/{movie}",
             arguments = listOf(navArgument(name = "movie") { type = NavType.LongType })
         ) { backStackEntry: NavBackStackEntry ->
-            Details(
+            ShowDetailsScreen(
                 navController = navController,
                 backStackEntry.arguments?.getLong("movie")!!
             )
