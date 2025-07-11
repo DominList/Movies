@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.dpl.dominlist.movies.screens.HomeListScreen
 import com.dpl.dominlist.movies.screens.ShowDetailsScreen
+import com.dpl.dominlist.movies.screens.ShowPosterScreen
 
 
 @Preview
@@ -24,13 +25,27 @@ fun MovieNavigation() {
         }
 
         composable(
-            route = MovieScreens.Detail.name + "/{movie}",
-            arguments = listOf(navArgument(name = "movie") { type = NavType.LongType })
+            route = getRoute(MovieScreens.Detail, MOVIE_ARG),
+            arguments = getNavArgumentList(MOVIE_ARG)
         ) { backStackEntry: NavBackStackEntry ->
             ShowDetailsScreen(
                 navController = navController,
-                backStackEntry.arguments?.getLong("movie")!!
+                movieId = backStackEntry.arguments?.getLong(MOVIE_ARG)!!
+            )
+        }
+
+        composable(
+            route = getRoute(MovieScreens.Poster, MOVIE_ARG),
+            arguments = getNavArgumentList(MOVIE_ARG)
+        ) { backStackEntry: NavBackStackEntry ->
+            ShowPosterScreen(
+                movieId = backStackEntry.arguments?.getLong(MOVIE_ARG)!!
             )
         }
     }
 }
+
+const val MOVIE_ARG = "movie"
+
+fun getRoute(screen: MovieScreens, pathArg: String) = "${screen.name}/{$pathArg}"
+fun getNavArgumentList(pathArg: String) = listOf(navArgument(name = pathArg) { type = NavType.LongType })

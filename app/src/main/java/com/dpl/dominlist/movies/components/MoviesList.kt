@@ -35,13 +35,14 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.transform.RoundedCornersTransformation
 import com.dpl.dominlist.movies.model.MovieItem
-import com.dpl.dominlist.movies.utlis.getMediumPictureUrl
+import com.dpl.dominlist.movies.utlis.getPosterOrFallbackUrl
 
 @Composable
 @Preview
 fun MoviesList(
     movieItems: State<List<MovieItem>> = remember { mutableStateOf(movieItemsExample) },
-    onItemClick: (Long) -> Unit = {}
+    onItemClick: (Long) -> Unit = {},
+    onPosterClick: (Long) -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -51,7 +52,7 @@ fun MoviesList(
     ) {
         items(movieItems.value) { item ->
             Spacer(modifier = Modifier.fillMaxWidth().height(3.dp))
-            SingleMovieCard(item, onItemClick)
+            SingleMovieCard(item, onItemClick, onPosterClick)
             Spacer(modifier = Modifier.fillMaxWidth().height(3.dp))
         }
     }
@@ -60,7 +61,8 @@ fun MoviesList(
 @Composable
 private fun SingleMovieCard(
     item: MovieItem,
-    onItemClick: (Long) -> Unit
+    onItemClick: (Long) -> Unit,
+    onPosterClick: (Long) -> Unit
 ) {
 
     Card(
@@ -81,18 +83,20 @@ private fun SingleMovieCard(
                 shadowElevation = 5.dp,
             ) {
                 Log.d("TAG", "SingleMovieCard: ${item.posterPath}")
-                val url: String? = getMediumPictureUrl(item.posterPath) ?: getMediumPictureUrl(item.backdropPath)
 
                 Image(
                     painter = rememberAsyncImagePainter(
-                        ImageRequest.Builder(LocalContext.current).data(data = url)
+                        ImageRequest.Builder(LocalContext.current).data(data = getPosterOrFallbackUrl(item))
                             .apply(block = fun ImageRequest.Builder.() {
                                 crossfade(true)
                                 transformations(RoundedCornersTransformation())
                                 scale(Scale.FILL)
                             }).build()
                     ),
-                    contentDescription = "Movie image"
+                    contentDescription = "Movie image",
+                    modifier = Modifier.clickable {
+                        onPosterClick.invoke(item.id)
+                    }
                 )
             }
 

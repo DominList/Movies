@@ -2,6 +2,7 @@ package com.dpl.dominlist.movies.navigation
 
 enum class MovieScreens {
     Movies,
+    Poster,
     Detail;
 
     companion object {

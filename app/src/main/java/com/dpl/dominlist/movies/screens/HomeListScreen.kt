@@ -54,6 +54,9 @@ fun HomeListScreen(
             movieItems = remember { movieItems },
             onItemClick = {
                 navController.navigate(route = MovieScreens.Detail.name+"/$it")
+            },
+            onPosterClick = {
+                navController.navigate(route = MovieScreens.Poster.name+"/$it")
             }
         )
     }
