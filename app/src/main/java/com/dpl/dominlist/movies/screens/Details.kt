@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -87,7 +88,7 @@ private fun DetailsTopBar(
         navigationIcon = {
             IconButton(onClick = {}) {
                 Icon(
-                    Icons.Filled.ArrowBack, "Back Icon",
+                    Icons.AutoMirrored.Filled.ArrowBack, "Back Icon",
                     modifier = Modifier.clickable {
                         navController?.popBackStack()
                     }
