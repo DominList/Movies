@@ -5,6 +5,7 @@ import android.icu.util.Calendar
 import android.util.Log
 import androidx.core.content.edit
 import com.dpl.dominlist.movies.utlis.getTAG
+import com.dpl.dominlist.movies.utlis.logD
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ class PreferencesService @Inject constructor(applicationContext: Context) {
     private val sharedPreferences = applicationContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     init {
-        Log.d(getTAG(), "PreferencesService: init.")
+        logD("PreferencesService: init.")
     }
 
     fun shouldUpdateDB() = getNowToMillis() - getLastDbUpdateTime() > UPDATE_INTERVAL
@@ -25,7 +26,7 @@ class PreferencesService @Inject constructor(applicationContext: Context) {
     private fun getLastDbUpdateTime() : Long  = sharedPreferences.getLong(LAST_MOVIES_DB_UPDATE_TIME_KEY, 0)
 
     private fun setUpdateTime(time : Long) = sharedPreferences.edit { putLong(LAST_MOVIES_DB_UPDATE_TIME_KEY, time) }
-        .apply { Log.d(getTAG(), "setUpdateTime: $time") }
+        .apply { logD("setUpdateTime: $time") }
 
 
     private companion object {

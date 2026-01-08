@@ -1,7 +1,7 @@
 package com.dpl.dominlist.movies.model
 
-import android.util.Log
-import com.dpl.dominlist.movies.utlis.getTAG
+import com.dpl.dominlist.movies.utlis.logD
+import com.dpl.dominlist.movies.utlis.logE
 import info.movito.themoviedbapi.model.MovieDb
 
 object Mapper {
@@ -10,7 +10,7 @@ object Mapper {
         return try {
             mapInternal(movieDto)
         } catch (e : Exception) {
-            Log.e(getTAG(), "map id= ${movieDto.id}, title= ${movieDto.title}", e)
+            logE("map id= ${movieDto.id}, title= ${movieDto.title}", e)
             null;
         }
     }
@@ -30,6 +30,6 @@ object Mapper {
         releaseDate = movieDto.releaseDate,
         popularity = movieDto.popularity,
     ).apply {
-        Log.d(getTAG(), "map: id=$id of $title")
+        logD("map: id=$id of $title")
     }
 }

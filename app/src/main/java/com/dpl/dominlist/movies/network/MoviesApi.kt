@@ -3,6 +3,9 @@ package com.dpl.dominlist.movies.network
 import android.util.Log
 import com.dpl.dominlist.movies.BuildConfig
 import com.dpl.dominlist.movies.utlis.getTAG
+import com.dpl.dominlist.movies.utlis.logD
+import com.dpl.dominlist.movies.utlis.logE
+import com.dpl.dominlist.movies.utlis.logI
 import info.movito.themoviedbapi.TmdbApi
 import info.movito.themoviedbapi.TmdbMovies
 import info.movito.themoviedbapi.model.core.MovieResultsPage
@@ -24,9 +27,9 @@ class MoviesApi {
                     it.page
                     totalPagesNumber = it.totalPages
                     resultList.add(it)
-                    it.forEach { Log.d(getTAG(), "title: ${it.title}") }
-                    Log.i(getTAG(), "getPLMoviesPage: page=$page of $totalPagesNumber added!")
-                } ?: Log.e(getTAG(), "getPLMoviesPage: page=$page of $totalPagesNumber is null")
+                    it.forEach { logD("title: ${it.title}") }
+                    logI("getPLMoviesPage: page=$page of $totalPagesNumber added!")
+                } ?: logE("getPLMoviesPage: page=$page of $totalPagesNumber is null")
                 page++
             } while (page <= totalPagesNumber)
         }

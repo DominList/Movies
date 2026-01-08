@@ -7,6 +7,7 @@ import com.dpl.dominlist.movies.network.MoviesApi
 import com.dpl.dominlist.movies.repository.MoviesRepository
 import com.dpl.dominlist.movies.repository.PreferencesService
 import com.dpl.dominlist.movies.utlis.getTAG
+import com.dpl.dominlist.movies.utlis.logD
 import info.movito.themoviedbapi.model.MovieDb
 import info.movito.themoviedbapi.model.core.MovieResultsPage
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,7 @@ class MoviesService @Inject constructor(
 
     suspend fun fetchData() {
         if (preferencesService.shouldUpdateDB().not()) {
-            Log.d(getTAG(), "fetchData: update not needed")
+            logD("fetchData: update not needed")
             return
         }
 
@@ -29,7 +30,7 @@ class MoviesService @Inject constructor(
             api.getAllPages()
                 .flatMap { page -> extractPage(page) }
                 .let { movies ->
-                    Log.d(getTAG(), "movies update: ${movies.size}")
+                    logD("movies update: ${movies.size}")
                     moviesDao.addOrUpdateMovies(movies)
                     preferencesService.markDbUpdated()
                 }
