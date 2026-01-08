@@ -1,7 +1,7 @@
 package com.dpl.dominlist.movies.model
 
-import com.dpl.dominlist.movies.utlis.logD
-import com.dpl.dominlist.movies.utlis.logE
+import com.dpl.dominlist.movies.utlis.logDebug
+import com.dpl.dominlist.movies.utlis.logError
 import info.movito.themoviedbapi.model.MovieDb
 
 object Mapper {
@@ -10,7 +10,7 @@ object Mapper {
         return try {
             mapInternal(movieDto)
         } catch (e : Exception) {
-            logE(msg = "map id= ${movieDto.id}, title= ${movieDto.title}", thr = e)
+            logError(msg = "map id= ${movieDto.id}, title= ${movieDto.title}", thr = e)
             null;
         }
     }
@@ -30,6 +30,6 @@ object Mapper {
         releaseDate = movieDto.releaseDate,
         popularity = movieDto.popularity,
     ).apply {
-        logD(msg = "map: id=$id of $title")
+        logDebug(msg = "map: id=$id of $title")
     }
 }

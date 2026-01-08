@@ -7,7 +7,7 @@ import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.repository.MoviesRepository
 import com.dpl.dominlist.movies.service.MoviesService
 import com.dpl.dominlist.movies.utlis.getTAG
-import com.dpl.dominlist.movies.utlis.logD
+import com.dpl.dominlist.movies.utlis.logDebug
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,7 +43,7 @@ class MoviesHomeViewModel @Inject constructor(
     }
 
     private fun getAllMovies() {
-        logD(msg = "getAllMovies()")
+        logDebug(msg = "getAllMovies()")
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMovies().distinctUntilChanged().collect {
                 _moviesList.value = it
