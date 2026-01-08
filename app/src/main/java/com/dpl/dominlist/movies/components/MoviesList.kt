@@ -1,6 +1,5 @@
 package com.dpl.dominlist.movies.components
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -36,6 +35,7 @@ import coil.size.Scale
 import coil.transform.RoundedCornersTransformation
 import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.utlis.getPosterOrFallbackUrl
+import com.dpl.dominlist.movies.utlis.logDebug
 
 @Composable
 @Preview
@@ -51,9 +51,13 @@ fun MoviesList(
             .padding(2.dp)
     ) {
         items(movieItems.value) { item ->
-            Spacer(modifier = Modifier.fillMaxWidth().height(3.dp))
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(3.dp))
             SingleMovieCard(item, onItemClick, onPosterClick)
-            Spacer(modifier = Modifier.fillMaxWidth().height(3.dp))
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(3.dp))
         }
     }
 }
@@ -82,7 +86,7 @@ private fun SingleMovieCard(
                 shape = RoundedCornerShape(8.dp),
                 shadowElevation = 5.dp,
             ) {
-                Log.d("TAG", "SingleMovieCard: ${item.posterPath}")
+                logDebug("SingleMovieCard: ${item.posterPath}")
 
                 Image(
                     painter = rememberAsyncImagePainter(

@@ -25,9 +25,9 @@ class MoviesApi {
                     it.page
                     totalPagesNumber = it.totalPages
                     resultList.add(it)
-                    it.forEach { logDebug(msg = "title: ${it.title}") }
-                    logInfo(msg = "getPLMoviesPage: page=$page of $totalPagesNumber added!")
-                } ?: logError(msg = "getPLMoviesPage: page=$page of $totalPagesNumber is null")
+                    it.forEach { logDebug("title: ${it.title}") }
+                    logInfo("getPLMoviesPage: page=$page of $totalPagesNumber added!")
+                } ?: logError("getPLMoviesPage: page=$page of $totalPagesNumber is null")
                 page++
             } while (page <= totalPagesNumber)
         }

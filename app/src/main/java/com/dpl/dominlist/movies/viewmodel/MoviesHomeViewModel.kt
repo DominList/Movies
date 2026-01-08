@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.dpl.dominlist.movies.model.MovieItem
 import com.dpl.dominlist.movies.repository.MoviesRepository
 import com.dpl.dominlist.movies.service.MoviesService
-import com.dpl.dominlist.movies.utlis.getTAG
+import com.dpl.dominlist.movies.utlis.TAG
 import com.dpl.dominlist.movies.utlis.logDebug
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +29,7 @@ class MoviesHomeViewModel @Inject constructor(
 
 
     init {
-        Log.d(this.javaClass.simpleName, "init viewModel: getALlMovies()")
+        Log.d(this.TAG, "init viewModel: getALlMovies()")
         getAllMovies()
         // fixme use sharedPrefs for limiting data fetch with date
         fetchData()
@@ -43,11 +43,11 @@ class MoviesHomeViewModel @Inject constructor(
     }
 
     private fun getAllMovies() {
-        logDebug(msg = "getAllMovies()")
+        logDebug("getAllMovies()")
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMovies().distinctUntilChanged().collect {
                 _moviesList.value = it
-                for (item in it) Log.d(this@MoviesHomeViewModel.getTAG(), item.toString())
+                for (item in it) logDebug(item.toString())
             }
         }
     }

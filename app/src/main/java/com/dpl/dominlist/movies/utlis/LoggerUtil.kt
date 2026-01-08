@@ -1,29 +1,54 @@
+@file:Suppress("NOTHING_TO_INLINE")
 package com.dpl.dominlist.movies.utlis
 
+
 import android.util.Log
+import kotlin.reflect.KClass
 
+val Any.TAG: String
+    get() = extractName(this::class.java)
 
-fun Any.getTAG(): String = this.javaClass.simpleName
+val Class<*>.TAG: String
+    get() = extractName(this)
 
-private fun Any.getTAG(tag: String?): String = tag?:getTAG()
+val KClass<*>.TAG: String
+    get() = extractName(this.java)
 
-
-fun Any.logVerbose(tag: String? = null, msg: String, thr: Throwable? = null) {
-    Log.v(getTAG(tag), msg, thr)
+private fun extractName(clazz: Class<*>): String {
+    val name = clazz.simpleName
+    return when {
+        name.contains("$") -> name.substringBefore("$")
+        name.isEmpty() -> "AnonymousClass"
+        else -> name
+    }
+}
+@PublishedApi
+internal fun Any.resolveTag(tag: Any?): String {
+    return when (tag) {
+        is String -> tag
+        is Class<*> -> tag.TAG
+        is KClass<*> -> tag.TAG
+        null -> this.TAG
+        else -> tag.toString()
+    }
 }
 
-fun Any.logInfo(tag: String? = null, msg: String, thr: Throwable? = null) {
-    Log.i(getTAG(tag), msg, thr)
+inline fun Any.logVerbose(msg: String, tag: Any? = null, thr: Throwable? = null) {
+    Log.v(resolveTag(tag), msg, thr)
 }
 
-fun Any.logDebug(tag: String? = null, msg: String, thr: Throwable? = null) {
-    Log.d(getTAG(tag), msg, thr)
+inline fun Any.logDebug(msg: String, tag: Any? = null, thr: Throwable? = null) {
+    Log.d(resolveTag(tag), msg, thr)
 }
 
-fun Any.logWarning(tag: String? = null, msg: String, thr: Throwable? = null) {
-    Log.w(getTAG(tag), msg, thr)
+inline fun Any.logInfo(msg: String, tag: Any? = null, thr: Throwable? = null) {
+    Log.i(resolveTag(tag), msg, thr)
 }
 
-fun Any.logError(tag: String? = null, msg: String, thr: Throwable? = null) {
-    Log.e(getTAG(tag), msg, thr)
+inline fun Any.logWarning(msg: String, tag: Any? = null, thr: Throwable? = null) {
+    Log.w(resolveTag(tag), msg, thr)
+}
+
+inline fun  Any.logError(msg: String, tag: Any? = null, thr: Throwable? = null) {
+    Log.e(resolveTag(tag), msg, thr)
 }
