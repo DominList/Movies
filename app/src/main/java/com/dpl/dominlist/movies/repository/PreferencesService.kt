@@ -14,7 +14,7 @@ class PreferencesService @Inject constructor(applicationContext: Context) {
     private val sharedPreferences = applicationContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     init {
-        logD("PreferencesService: init.")
+        logD(msg = "PreferencesService: init.")
     }
 
     fun shouldUpdateDB() = getNowToMillis() - getLastDbUpdateTime() > UPDATE_INTERVAL
@@ -26,7 +26,7 @@ class PreferencesService @Inject constructor(applicationContext: Context) {
     private fun getLastDbUpdateTime() : Long  = sharedPreferences.getLong(LAST_MOVIES_DB_UPDATE_TIME_KEY, 0)
 
     private fun setUpdateTime(time : Long) = sharedPreferences.edit { putLong(LAST_MOVIES_DB_UPDATE_TIME_KEY, time) }
-        .apply { logD("setUpdateTime: $time") }
+        .apply { logD(msg = "setUpdateTime: $time") }
 
 
     private companion object {

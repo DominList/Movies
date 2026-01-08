@@ -43,7 +43,7 @@ class MoviesHomeViewModel @Inject constructor(
     }
 
     private fun getAllMovies() {
-        logD("getAllMovies()")
+        logD(msg = "getAllMovies()")
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMovies().distinctUntilChanged().collect {
                 _moviesList.value = it

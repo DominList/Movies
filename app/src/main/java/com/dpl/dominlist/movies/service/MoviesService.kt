@@ -22,7 +22,7 @@ class MoviesService @Inject constructor(
 
     suspend fun fetchData() {
         if (preferencesService.shouldUpdateDB().not()) {
-            logD("fetchData: update not needed")
+            logD(msg = "fetchData: update not needed")
             return
         }
 
@@ -30,7 +30,7 @@ class MoviesService @Inject constructor(
             api.getAllPages()
                 .flatMap { page -> extractPage(page) }
                 .let { movies ->
-                    logD("movies update: ${movies.size}")
+                    logD(msg = "movies update: ${movies.size}")
                     moviesDao.addOrUpdateMovies(movies)
                     preferencesService.markDbUpdated()
                 }

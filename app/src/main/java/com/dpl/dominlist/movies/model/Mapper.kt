@@ -10,7 +10,7 @@ object Mapper {
         return try {
             mapInternal(movieDto)
         } catch (e : Exception) {
-            logE("map id= ${movieDto.id}, title= ${movieDto.title}", e)
+            logE(msg = "map id= ${movieDto.id}, title= ${movieDto.title}", thr = e)
             null;
         }
     }
@@ -30,6 +30,6 @@ object Mapper {
         releaseDate = movieDto.releaseDate,
         popularity = movieDto.popularity,
     ).apply {
-        logD("map: id=$id of $title")
+        logD(msg = "map: id=$id of $title")
     }
 }
